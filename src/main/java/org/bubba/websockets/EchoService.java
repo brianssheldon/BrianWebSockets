@@ -8,6 +8,7 @@ import javax.websocket.OnMessage;
 import javax.websocket.OnOpen;
 import javax.websocket.Session;
 import javax.websocket.server.ServerEndpoint;
+import org.apache.commons.lang3.StringUtils;
 import org.codehaus.jackson.map.ObjectMapper;
 
 @ServerEndpoint("/echo") 
@@ -37,7 +38,11 @@ public class EchoService
     public void onMessage(String message, Session session){
         System.out.println("Message from " + session.getId() + ": " + message);
         try {
-            session.getBasicRemote().sendText(getYorkie(9));
+			int x = 0;
+			if(StringUtils.isNumeric(message)) x = Integer.parseInt(message);
+			System.err.println("x = " + x);
+			
+            session.getBasicRemote().sendText(getYorkie(x));
         } catch (IOException ex) {
             ex.printStackTrace();
         }
@@ -55,7 +60,7 @@ public class EchoService
 	
 	String getYorkie(int i)
 	{
-		Yorkie y = new Yorkie("furry", "none", "love", 4, true);
+		Yorkie y = new Yorkie("furry", "none", "love", i, true);
 		String result = "";
 			
 		ObjectMapper mapper = new ObjectMapper();
