@@ -17,6 +17,28 @@
             <button type="button" onclick="send();" >Send</button>
             <button type="button" onclick="closeSocket();" >Close</button>
         </div>
+	
+	<div>
+	    Face&nbsp; <INPUT id="face"  />
+	</div>
+	
+	<div>
+	    Finger&nbsp; <INPUT id="finger"  />
+	</div>
+	
+	<div>
+	    Taco&nbsp; <INPUT id="taco"  />
+	</div>
+	
+	<div>
+	    How Many&nbsp; <INPUT id="howMany"  />
+	</div>
+	
+	<div>
+	    Is that too many &nbsp; <INPUT id="isThatTooMany"  />
+	</div>
+	
+	
         <!-- Server responses get written here -->
         <div id="messages"></div>
        
@@ -72,6 +94,13 @@
  
             function writeResponse(text){
                 messages.innerHTML += "<br/>" + text;
+		
+		var obj = JSON.parse(text);
+		document.getElementById("face").value = obj.face;
+		document.getElementById("finger").value = obj.finger;
+		document.getElementById("taco").value = obj.taco;
+		document.getElementById("howMany").value = obj.howMany;
+		document.getElementById("isThatTooMany").value = obj.isThatTooMany;
             }
            
         </script>
