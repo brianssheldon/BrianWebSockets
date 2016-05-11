@@ -39,11 +39,19 @@ public class EchoService
         System.out.println("Message from " + session.getId() + ": " + message);
         try {
 			int x = 0;
-			if(StringUtils.isNumeric(message)) x = Integer.parseInt(message);
+			if(StringUtils.isNumeric(message)) 
+			{
+				try
+				{
+					x = Integer.parseInt(message);
+				}catch(NumberFormatException numberFormatException)
+				{
+				}
+			}
 			System.err.println("x = " + x);
 			
             session.getBasicRemote().sendText(getYorkie(x));
-        } catch (IOException ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
@@ -68,6 +76,7 @@ public class EchoService
 		try
 		{
 			result = mapper.writeValueAsString(y);
+			System.err.println("'" + result + "'");
 		}
 		catch(IOException ex)
 		{

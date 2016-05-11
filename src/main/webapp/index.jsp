@@ -56,8 +56,7 @@
                     return;
                 }
                 // Create a new instance of the websocket
-                webSocket = new WebSocket("ws://localhost:8080/BrianWebSockets/echo");
-                 
+                webSocket = new WebSocket("ws:" + location.host  + "/BrianWebSockets/echo");
                 /**
                  * Binds functions to the listeners for the websocket.
                  */
