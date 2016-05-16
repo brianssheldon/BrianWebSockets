@@ -10,6 +10,7 @@ public class Yorkie implements Serializable
 	private int howMany = 0;
 	private boolean isThatTooMany = false;
 
+	public Yorkie(){}
 	public Yorkie(String facex, String fingerx, String tacox, int howManyx, boolean isThatTooManyx)
 	{
 		face = facex;

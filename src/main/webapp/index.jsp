@@ -1,4 +1,4 @@
-<BR>yolanda<br><BR>
+<BR>yolanda<br>
 <!DOCTYPE html>
  
 <html>
@@ -9,38 +9,60 @@
     </head>
     <body>
        
-        <div>
+<!--        <div>
             <input type="text" id="messageinput"/>
-        </div>
+        </div>-->
+	<BR>
+	<div>
+	    Face&nbsp; <INPUT id="face"  />
+	</div>
+	<BR>
+	<div>
+	    Finger&nbsp; <INPUT id="finger"  />
+	</div>
+	<BR>
+	<div>
+	    Taco&nbsp; <INPUT id="taco"  />
+	</div>
+	<BR>
+	<div>
+	    How Many&nbsp; <INPUT id="howMany"  />
+	</div>
+	<BR>
+	<div>
+	    Is that too many &nbsp; <INPUT id="isThatTooMany"  />
+	</div>
+	<BR><BR><BR>
+	
         <div>
             <button type="button" onclick="openSocket();" >Open</button>
             <button type="button" onclick="send();" >Send</button>
             <button type="button" onclick="closeSocket();" >Close</button>
+	    <TEXT id="messages"/>
         </div>
-	
-	<div>
-	    Face&nbsp; <INPUT id="face"  />
-	</div>
-	
-	<div>
-	    Finger&nbsp; <INPUT id="finger"  />
-	</div>
-	
-	<div>
-	    Taco&nbsp; <INPUT id="taco"  />
-	</div>
-	
-	<div>
-	    How Many&nbsp; <INPUT id="howMany"  />
-	</div>
-	
-	<div>
-	    Is that too many &nbsp; <INPUT id="isThatTooMany"  />
-	</div>
-	
-	
         <!-- Server responses get written here -->
-        <div id="messages"></div>
+	
+	<BR><BR>
+	<div>
+	    Face&nbsp; <INPUT id="face2" readonly />
+	</div>
+	<BR>
+	<div>
+	    Finger&nbsp; <INPUT id="finger2" readonly />
+	</div>
+	<BR>
+	<div>
+	    Taco&nbsp; <INPUT id="taco2" readonly />
+	</div>
+	<BR>
+	<div>
+	    How Many&nbsp; <INPUT id="howMany2" readonly />
+	</div>
+	<BR>
+	<div>
+	    Is that too many &nbsp; <INPUT id="isThatTooMany2" readonly />
+	</div>
+	<BR><BR><BR>
        
         <!-- Script to utilise the WebSocket -->
         <script type="text/javascript">
@@ -83,8 +105,22 @@
              * Sends the value of the text input to the server
              */
             function send(){
-                var text = document.getElementById("messageinput").value;
-                webSocket.send(text);
+//                var text = document.getElementById("messageinput").value;
+                var face = document.getElementById("face").value;
+                var finger = document.getElementById("finger").value;
+                var taco = document.getElementById("taco").value;
+                var howMany = document.getElementById("howMany").value;
+                var ittm = document.getElementById("isThatTooMany").value;
+		
+		var yorkie = '{"face":"' + face
+			+ '","finger":"' + finger 
+			+ '","taco":"' + taco 
+			+ '","howMany":' + howMany
+			+ ',"isThatTooMany":' + ittm + '}';
+		
+		//{"face":"furry","finger":"none","taco":"love","howMany":22,"isThatTooMany":true}
+		//{"face":"aa","finger":"bb","taco":"cccc","howMany":234","isThatTooMany":"false"}
+                webSocket.send(yorkie);
             }
            
             function closeSocket(){
@@ -95,11 +131,17 @@
                 messages.innerHTML += "<br/>" + text;
 		
 		var obj = JSON.parse(text);
-		document.getElementById("face").value = obj.face;
-		document.getElementById("finger").value = obj.finger;
-		document.getElementById("taco").value = obj.taco;
-		document.getElementById("howMany").value = obj.howMany;
-		document.getElementById("isThatTooMany").value = obj.isThatTooMany;
+		document.getElementById("face").value = "";
+		document.getElementById("finger").value = "";
+		document.getElementById("taco").value = "";
+		document.getElementById("howMany").value = "";
+		document.getElementById("isThatTooMany").value = "";
+		
+		document.getElementById("face2").value = obj.face;
+		document.getElementById("finger2").value = obj.finger;
+		document.getElementById("taco2").value = obj.taco;
+		document.getElementById("howMany2").value = obj.howMany;
+		document.getElementById("isThatTooMany2").value = obj.isThatTooMany;
             }
            
         </script>

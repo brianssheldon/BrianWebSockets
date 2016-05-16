@@ -37,20 +37,23 @@ public class EchoService
     @OnMessage
     public void onMessage(String message, Session session){
         System.out.println("Message from " + session.getId() + ": " + message);
+		
+		
+		ObjectMapper mapper = new ObjectMapper();
+		Yorkie y = new Yorkie();
+		try
+		{
+			y = mapper.readValue(message, Yorkie.class);
+		}catch(Exception ex)
+		{
+			Logger.getLogger(EchoService.class.getName()).log(Level.SEVERE, null, ex);
+		}
+		
+		System.err.println("\n\nface " + y.getFace() + "\nfinger " + y.getFinger() 
+			+ "\ntaco " + y.getTaco() + "\nhowMany " + y.getHowMany() 
+			+ "\nittm " + y.isIsThatTooMany());
         try {
-			int x = 0;
-			if(StringUtils.isNumeric(message)) 
-			{
-				try
-				{
-					x = Integer.parseInt(message);
-				}catch(NumberFormatException numberFormatException)
-				{
-				}
-			}
-			System.err.println("x = " + x);
-			
-            session.getBasicRemote().sendText(getYorkie(x));
+            session.getBasicRemote().sendText(getYorkie(y));
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -69,6 +72,25 @@ public class EchoService
 	String getYorkie(int i)
 	{
 		Yorkie y = new Yorkie("furry", "none", "love", i, true);
+		String result = "";
+			
+		ObjectMapper mapper = new ObjectMapper();
+		
+		try
+		{
+			result = mapper.writeValueAsString(y);
+			System.err.println("'" + result + "'");
+		}
+		catch(IOException ex)
+		{
+			Logger.getLogger(EchoService.class.getName()).log(Level.SEVERE, null, ex);
+		}
+		return result;
+	}
+	
+	String getYorkie(Yorkie y)
+	{
+//		Yorkie y = new Yorkie("furry", "none", "love", i, true);
 		String result = "";
 			
 		ObjectMapper mapper = new ObjectMapper();
